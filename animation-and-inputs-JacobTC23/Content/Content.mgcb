@@ -25,7 +25,7 @@
 /processorParam:TextureFormat=Color
 /build:Balloon.png
 
-#begin bird.png
+#begin blue_bird.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -35,9 +35,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:bird.png
+/build:blue_bird.png
 
-#begin flag_red.png
+#begin flag_animation.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -47,7 +47,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:flag_red.png
+/build:flag_animation.png
 
 #begin Houses.jpg
 /importer:TextureImporter
