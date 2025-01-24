@@ -39,7 +39,7 @@ public class Input_and_Animation : Game
         _balloon = Content.Load<Texture2D>("Balloon");
 
         Texture2D spriteSheet = Content.Load<Texture2D>("flag_red");
-         _flag = new CelAnimationSequence(spriteSheet, 126, 1 / 8f);
+         _flag = new CelAnimationSequence(spriteSheet, 126, 1 / 4f);
          _animation1 = new CelAnimationPlayer();
          _animation1.Play(_flag);
         
