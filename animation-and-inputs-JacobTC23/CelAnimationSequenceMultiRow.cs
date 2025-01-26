@@ -21,23 +21,23 @@ public class CelAnimationSequenceMultiRow
     protected int celCount;
     protected int celColumnCount;
     protected int celRowCount;
+    protected int rowToAnimate;
 
     /// <summary>
     /// Constructs a new CelAnimationSequence.
     /// </summary>        
-    public CelAnimationSequenceMultiRow(Texture2D texture, int celWidth, int celHeight, float celTime, int celColumnCount, int celRowCount)
+    public CelAnimationSequenceMultiRow(Texture2D texture, int celWidth, int celHeight, float celTime, int rowToAnimate)
     {
         this.texture = texture;
         this.celWidth = celWidth;
         this.celHeight = celHeight;
         this.celTime = celTime;
+        this.rowToAnimate = rowToAnimate;
 
-        celHeight = Texture.Height;
-
-        //SITUATION ONE: ONE ANIMATION, MULTIPLE ROWS
-        this.celHeight = celHeight;
         celColumnCount = Texture.Width / celWidth;
         celRowCount = Texture.Height / celHeight;
+
+        celCount = celColumnCount;
     }
 
     /// <summary>
@@ -89,6 +89,12 @@ public class CelAnimationSequenceMultiRow
     {
         get { return celRowCount; }
     }
+    public int RowToAnimate 
+    {
+        get {return rowToAnimate; }
+    }
+
+    
 
     
 }

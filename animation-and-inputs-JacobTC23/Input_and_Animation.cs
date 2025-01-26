@@ -31,7 +31,9 @@ public class Input_and_Animation : Game
         // TODO: Add your initialization logic here
          _graphics.PreferredBackBufferWidth = _WindowWidth;
         _graphics.PreferredBackBufferHeight = _WindowHeight;
+        
         _graphics.ApplyChanges();
+        
 
         base.Initialize();
     }
@@ -49,11 +51,19 @@ public class Input_and_Animation : Game
          _animation1.Play(_flag);
 
          Texture2D spriteSheet2 = Content.Load<Texture2D>("blue_bird");
-         bird1 = new CelAnimationSequenceMultiRow(spriteSheet2, 350, 350, 1/4f, 3, 3);
+         bird1 = new CelAnimationSequenceMultiRow(spriteSheet2, 350, 350, 1/4f, birdRow);
          birdFlying1 = new CelAnimationPlayerMultiRow();
          birdFlying1.Play(bird1);
 
         // TODO: use this.Content to load your game content here
+    }
+
+    protected void ChangeBirdAnimation()
+    {
+        Texture2D spriteSheet2 = Content.Load<Texture2D>("blue_bird");
+         bird1 = new CelAnimationSequenceMultiRow(spriteSheet2, 350, 350, 1/4f, birdRow);
+         birdFlying1 = new CelAnimationPlayerMultiRow();
+         birdFlying1.Play(bird1);
     }
 
     protected override void Update(GameTime gameTime)
@@ -62,11 +72,27 @@ public class Input_and_Animation : Game
         birdFlying1.Update(gameTime);
         // TODO: Add your update logic here
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Q))
-            birdRow = 1;
+        {
+            birdRow = 0;
+            ChangeBirdAnimation();
+        }
+           
+            
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.W))
-            birdRow = 2;
+        {
+            birdRow = 1;
+           ChangeBirdAnimation();
+        }
+            
+            
+            
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.E))
-            birdRow = 3;
+        {
+            birdRow = 2;
+            ChangeBirdAnimation();
+        }
+            
+           
 
         base.Update(gameTime);
     }
