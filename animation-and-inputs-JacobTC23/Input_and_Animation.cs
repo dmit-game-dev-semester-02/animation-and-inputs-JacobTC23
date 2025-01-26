@@ -11,10 +11,14 @@ public class Input_and_Animation : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Texture2D _background, _balloon;
-    private CelAnimationSequence _flag, _bird;
-    private CelAnimationPlayer _animation1, _Animation2;
-    private float _BalloonX;
-    private float _BalloonY;
+    private CelAnimationSequence _flag; //_bird;
+    private CelAnimationPlayer _animation1;//, _Animation2;
+
+    private CelAnimationSequenceMultiRow bird1;//, bird2, bird3;
+    private CelAnimationPlayerMultiRow birdFlying1;//, birdFlying2, birldFlying3;
+    private int birdRow;
+    //private float _BalloonX;
+    //private float _BalloonY;
     public Input_and_Animation()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -45,9 +49,9 @@ public class Input_and_Animation : Game
          _animation1.Play(_flag);
 
          Texture2D spriteSheet2 = Content.Load<Texture2D>("blue_bird");
-         _bird = new CelAnimationSequence(spriteSheet2, 350, 1/4f);
-         _Animation2 = new CelAnimationPlayer();
-         _Animation2.Play(_bird);
+         bird1 = new CelAnimationSequenceMultiRow(spriteSheet2, 350, 350, 1/4f, 3, 3);
+         birdFlying1 = new CelAnimationPlayerMultiRow();
+         birdFlying1.Play(bird1);
 
         // TODO: use this.Content to load your game content here
     }
@@ -55,8 +59,14 @@ public class Input_and_Animation : Game
     protected override void Update(GameTime gameTime)
     {
         _animation1.Update(gameTime);
-        _Animation2.Update(gameTime);
+        birdFlying1.Update(gameTime);
         // TODO: Add your update logic here
+        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Q))
+            birdRow = 1;
+        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.W))
+            birdRow = 2;
+        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.E))
+            birdRow = 3;
 
         base.Update(gameTime);
     }
@@ -67,9 +77,9 @@ public class Input_and_Animation : Game
 
         _spriteBatch.Begin();
         _spriteBatch.Draw(_background, Vector2.Zero, Color.White);
-        _spriteBatch.Draw(_balloon, new Vector2(_BalloonX, _BalloonY), Color.White);
+        _spriteBatch.Draw(_balloon, new Vector2(0, 0), Color.White);
         _animation1.Draw(_spriteBatch, new Vector2(500, 550), SpriteEffects.None);
-        _Animation2.Draw(_spriteBatch, new Vector2(100, 100), SpriteEffects.None);
+        birdFlying1.Draw(_spriteBatch, new Vector2(100, 100), SpriteEffects.None);
         
         _spriteBatch.End();
 
