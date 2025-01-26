@@ -45,12 +45,8 @@ public class Input_and_Animation : Game
          _animation1.Play(_flag);
 
          Texture2D spriteSheet2 = Content.Load<Texture2D>("blue_bird");
-         _bird = new CelAnimationSequence(spriteSheet2,
-            frameWidth: 32,      // Width of each frame
-            frameHeight: 32,     // Height of each frame
-            totalFrames: 24      // Total number of frames
-        );
-         _Animation2 = new CelAnimationPlayer(_bird);
+         _bird = new CelAnimationSequence(spriteSheet2, 350, 1/4f);
+         _Animation2 = new CelAnimationPlayer();
          _Animation2.Play(_bird);
 
         // TODO: use this.Content to load your game content here
