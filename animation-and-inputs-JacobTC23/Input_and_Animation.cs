@@ -11,14 +11,16 @@ public class Input_and_Animation : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Texture2D _background, _balloon;
-    private CelAnimationSequence _flag; //_bird;
-    private CelAnimationPlayer _animation1;//, _Animation2;
+    private CelAnimationSequence _flag, _guy;
+    private CelAnimationPlayer _animation1, _Animation2;
 
-    private CelAnimationSequenceMultiRow bird1;//, bird2, bird3;
-    private CelAnimationPlayerMultiRow birdFlying1;//, birdFlying2, birldFlying3;
+    private CelAnimationSequenceMultiRow bird1;
+    private CelAnimationPlayerMultiRow birdFlying1;
     private int birdRow;
-    //private float _BalloonX;
-    //private float _BalloonY;
+    private float _guyX;
+    private float _guyY;
+    private float _birdX;
+    private float _birdY;
     public Input_and_Animation()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -33,7 +35,7 @@ public class Input_and_Animation : Game
         _graphics.PreferredBackBufferHeight = _WindowHeight;
         
         _graphics.ApplyChanges();
-        
+        birdRow = 0;
 
         base.Initialize();
     }
@@ -50,6 +52,12 @@ public class Input_and_Animation : Game
          _animation1 = new CelAnimationPlayer();
          _animation1.Play(_flag);
 
+         Texture2D spriteSheet3 = Content.Load<Texture2D>("Walking_guy");
+        // the flag still shakes in place but thats just because it was not made the best I assume.
+         _guy = new CelAnimationSequence(spriteSheet3, 375, 1 / 4f);
+         _Animation2 = new CelAnimationPlayer();
+         _Animation2.Play(_guy);
+
          Texture2D spriteSheet2 = Content.Load<Texture2D>("blue_bird");
          bird1 = new CelAnimationSequenceMultiRow(spriteSheet2, 350, 350, 1/4f, birdRow);
          birdFlying1 = new CelAnimationPlayerMultiRow();
@@ -58,38 +66,63 @@ public class Input_and_Animation : Game
         // TODO: use this.Content to load your game content here
     }
 
-    protected void ChangeBirdAnimation()
-    {
-        Texture2D spriteSheet2 = Content.Load<Texture2D>("blue_bird");
-         bird1 = new CelAnimationSequenceMultiRow(spriteSheet2, 350, 350, 1/4f, birdRow);
-         birdFlying1 = new CelAnimationPlayerMultiRow();
-         birdFlying1.Play(bird1);
-    }
 
     protected override void Update(GameTime gameTime)
     {
         _animation1.Update(gameTime);
+        _Animation2.Update(gameTime);
         birdFlying1.Update(gameTime);
         // TODO: Add your update logic here
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Q))
+        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.L))
         {
-            birdRow = 0;
-            ChangeBirdAnimation();
+            
+            _birdX++;
+            
         }
            
             
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.W))
+        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.K))
         {
-            birdRow = 1;
-           ChangeBirdAnimation();
+            
+            _birdX--;
+            
         }
             
-            
-            
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.E))
+        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.L) && birdRow == 0)
         {
-            birdRow = 2;
-            ChangeBirdAnimation();
+            Texture2D spriteSheet2 = Content.Load<Texture2D>("blue_bird");
+            bird1 = new CelAnimationSequenceMultiRow(spriteSheet2, 350, 350, 1/4f, birdRow);
+            birdFlying1 = new CelAnimationPlayerMultiRow();
+            birdFlying1.Play(bird1);
+            birdRow = 1;
+        }    
+            
+        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.K) && birdRow == 1)
+        {
+            
+            Texture2D spriteSheet2 = Content.Load<Texture2D>("blue_bird");
+            bird1 = new CelAnimationSequenceMultiRow(spriteSheet2, 350, 350, 1/4f, birdRow);
+            birdFlying1 = new CelAnimationPlayerMultiRow();
+            birdFlying1.Play(bird1);
+            birdRow = 0;
+            
+        }
+
+         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Right))
+        {
+            _guyX++;
+        }
+        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Left))
+        {
+            _guyX--;
+        }
+        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Up))
+        {
+            _guyY--;
+        }
+        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Down))
+        {
+            _guyY++;
         }
             
            
@@ -105,7 +138,8 @@ public class Input_and_Animation : Game
         _spriteBatch.Draw(_background, Vector2.Zero, Color.White);
         _spriteBatch.Draw(_balloon, new Vector2(0, 0), Color.White);
         _animation1.Draw(_spriteBatch, new Vector2(500, 550), SpriteEffects.None);
-        birdFlying1.Draw(_spriteBatch, new Vector2(100, 100), SpriteEffects.None);
+        _Animation2.Draw(_spriteBatch, new Vector2(_guyX, _guyY), SpriteEffects.None);
+        birdFlying1.Draw(_spriteBatch, new Vector2(_birdX, _birdY), SpriteEffects.None);
         
         _spriteBatch.End();
 
