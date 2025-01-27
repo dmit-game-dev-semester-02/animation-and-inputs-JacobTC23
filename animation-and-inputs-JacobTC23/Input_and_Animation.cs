@@ -20,7 +20,7 @@ public class Input_and_Animation : Game
     private float _guyX;
     private float _guyY;
     private float _birdX;
-    private float _birdY;
+    //private float _birdY;
     public Input_and_Animation()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -136,10 +136,10 @@ public class Input_and_Animation : Game
 
         _spriteBatch.Begin();
         _spriteBatch.Draw(_background, Vector2.Zero, Color.White);
-        _spriteBatch.Draw(_balloon, new Vector2(0, 0), Color.White);
+        _spriteBatch.Draw(_balloon, new Vector2(1000, 0), Color.White);
         _animation1.Draw(_spriteBatch, new Vector2(500, 550), SpriteEffects.None);
         _Animation2.Draw(_spriteBatch, new Vector2(_guyX, _guyY), SpriteEffects.None);
-        birdFlying1.Draw(_spriteBatch, new Vector2(_birdX, _birdY), SpriteEffects.None);
+        birdFlying1.Draw(_spriteBatch, new Vector2(_birdX, 0), SpriteEffects.None);
         
         _spriteBatch.End();
 
